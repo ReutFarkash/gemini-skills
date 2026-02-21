@@ -1,37 +1,36 @@
 ---
 name: conversation-flow
-description: Generates an interactive Mermaid.js flowchart using inline Markdown links within node labels to point to SHAs, summaries, and external sources.
+description: Generates an interactive Mermaid.js flowchart using HTML links within node labels for maximum compatibility with Obsidian and web renderers.
 ---
 
-# Conversation Flow (v2.4)
+# Conversation Flow (v2.5)
 
 ## Overview
 
-This skill generates a topological map of a Gemini CLI session. It leverages Mermaid's Markdown string support to embed multiple, independent clickable links within a single node, allowing icons to act as direct portals to technical and narrative proof.
+This skill generates a high-fidelity topological map of a Gemini CLI session. It uses HTML anchor tags within node labels to enable multiple, independent clickable links, overcoming the limitations of standard Markdown rendering in some Mermaid environments.
 
-## Workflow: Generating a v2.4 Flow Analysis
+## Workflow: Generating a v2.5 Flow Analysis
 
-1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates.
-2.  **Metadata Inventory:** Track URLs for Git commits, Obsidian summary headers, chat tags, and external sources associated with each node.
+1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates and `vault_output_directory` and `vault_name`.
+2.  **Metadata Inventory:** Track URLs for Git commits, Obsidian summary headers (as URIs), chat tags, and external sources.
 3.  **Generate Flowchart Syntax:**
-    *   **Markdown Strings:** Use the backtick-quoted string syntax for nodes to enable Markdown links: `NodeID["`**Text** [🐙](URL) [§](URL)`"]`.
+    *   **HTML Links:** Use HTML `<a>` tags inside quoted labels: `NodeID["Label <a href='URL'>🐙</a> <a href='URL'>§</a>"]`.
+    *   **Obsidian URIs:** For internal links, construct them using the `vault_name` and filename: `obsidian://open?vault={{vault_name}}&file={{filename_encoded}}`. Ensure filename is URL-encoded if it contains spaces.
     *   **Icon Mapping:**
         - `🐙`: GitHub/GitLab Commit URL.
-        - `§`: Obsidian Summary header WikiLink.
+        - `§`: Obsidian Summary header (via Obsidian URI).
         - `🏷️`: Chat save tag reference.
-        - `🌐`: Documentation URL.
-    *   **Interaction:** Do NOT use the global `click` command. Instead, embed standard Markdown `[icon](link)` syntax directly into the label string.
-4.  **CRITICAL: Formatting & Escaping:**
-    *   The outer quotes must be double-quotes, and the inner string must start and end with a backtick: `"``Text [🐙](link)``"`.
-    *   Ensure all Markdown syntax within the label is valid.
-5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
-6.  **Write to File:** Save to `output/YYYY-MM-DD_HHMMSS-conversation-flow.md`.
+4.  **CRITICAL: Formatting:**
+    *   Always use double quotes for the label and single quotes for the HTML attributes: `"Text <a href='...'></a>"`.
+    *   Avoid backticks inside labels unless they are properly escaped for HTML.
+5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session technical overview.
+6.  **Write to File:** Save to the `vault_output_directory` defined in shared settings.
 
 ## Output Structure
 
 1.  **YAML Frontmatter**
 2.  **Interactive Dashboard**
-3.  **Topological Map** (With Hyper-Linked Icons)
+3.  **Topological Map** (With HTML-Linked Icons)
 4.  **Textual Breakdown**
 
 ### Class Styling Template

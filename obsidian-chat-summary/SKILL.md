@@ -31,7 +31,7 @@ To generate a summary, the agent will:
     *   **Links:** Include local file paths and external URLs discussed.
     *   **Conversation Turns:** When referencing specific parts of the conversation, use brief, context-setting quotes.
 8.  **Format Output:** Present the summary in clean Markdown, ensuring compatibility and readability within Obsidian.
-9.  **Write to File:** Create the Markdown file in the `output/` directory of the current working directory, using the filename format from the shared settings (e.g., `YYYY-MM-DD_HHMMSS-obsidian-chat-summary.md`).
+9.  **Write to File:** Create the Markdown file in the `vault_output_directory` defined in the shared settings, using the filename format from the shared settings (e.g., `YYYY-MM-DD_HHMMSS-obsidian-chat-summary.md`).
 
 ## Content Generation Guidelines
 
