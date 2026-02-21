@@ -52,3 +52,8 @@ This section allows you to define skill-specific tags and links to be incorporat
 *   **`custom_obsidian_links`**: A comma-separated list of Obsidian internal links that might be relevant to include in the summary content where appropriate.
     *   Example: `[[Workflows/Gemini CLI]], [[Key Concepts/AI Assistance]]`
     *   Your current custom Obsidian links:
+
+## Future Enhancements
+
+- [ ] **Automated GitOps Tethering:** Add logic to automatically detect if the current directory is a Git repository and append the current short SHA `[ref: <sha>]` to the summary header.
+- [ ] **Dataview Auto-Linking:** Automatically suggest or generate a Dataview query snippet at the bottom of the summary to show "Related notes from this project."
