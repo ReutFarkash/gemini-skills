@@ -1,53 +1,54 @@
 ---
 name: conversation-flow
-description: Generates a Mermaid.js flowchart and a textual summary of the current conversation's narrative structure, including metadata callouts and Git SHAs.
+description: Generates an interactive Mermaid.js flowchart and metadata dashboard, deep-linked to technical summaries and Git commits.
 ---
 
-# Conversation Flow
+# Conversation Flow (v2)
 
 ## Overview
 
-This skill enables the Gemini CLI agent to analyze the current conversation's history and generate a high-fidelity visual flowchart of its narrative structure. It provides a topological map of the session, linking intent, technical implementation (Git SHAs), and session metadata into an interactive index for an Obsidian vault.
+This skill generates a high-fidelity topological map of a Gemini CLI session. It links engineering intent to technical execution by pairing visual nodes with Obsidian summary headers and verifiable Git SHAs.
 
-## Workflow: Generating a Conversation Flow
+## Workflow: Generating a v2 Flow Analysis
 
-To construct a conversation flow analysis, perform the following steps:
-
-1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for naming, frontmatter, and metadata templates.
+1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates.
 2.  **Analyze Technical Context:**
-    *   **Git State:** Run `git rev-parse --short HEAD` in active repositories (e.g., `coffeeproject`, `skills/public`).
-    *   **Tool Usage:** Review history to count usage of primary tools (e.g., `replace`, `grep_search`, `write_file`).
-    *   **Feature Log:** Identify specific feature names or infrastructure changes implemented.
-3.  **Analyze Narrative Structure:** Identify the main goals, technical research phases, implementation steps, critical decisions, and unresolved "open loops."
+    *   **State Preservation:** Identify the specific `/chat save <tag>` used for this session.
+    *   **Repository Mapping:** For each active repository (e.g., `coffeeproject`, `skills/public`):
+        - Identify the branch: `git branch --show-current`.
+        - Extract relevant SHAs: `git log -n 5 --pretty=format:"%h"`.
+        - Build GitHub URLs: Construct links using the pattern `https://github.com/[User]/[Repo]/commit/[SHA]`.
+    *   **Toolbelt:** Review history to count tool usage (e.g., `write_file`, `replace`).
+3.  **The Pairing Engine:**
+    - **Vault Link:** Identify the filename of the corresponding Obsidian Session Summary.
+    - **Header Anchors:** Review the summary content to identify specific headers (e.g., `## 🏗️ 1. Infrastructure`) that correspond to implementation nodes.
 4.  **Generate Flowchart Syntax:**
-    *   **Schema & Shapes:** Use the following semantic schema for nodes:
+    *   **Semantic Shapes:**
         - **Research:** `NodeName{{Text}}` (Hexagon)
         - **Implementation:** `NodeName[Text]` (Rectangle)
         - **Decision:** `NodeName{Text}` (Diamond)
-        - **Bug/Obstacle:** `NodeName([Text])` (Cylinder)
+        - **Fail/Obstacle:** `NodeName([Text])` (Cylinder)
         - **Success/Checkpoint:** `NodeName((Text))` (Circle)
-        - **Open Loop:** `NodeName[Text] -.-` (Dashed connection)
-    *   **Class Definitions:** Include `classDef` statements at the bottom of the Mermaid block for colors (e.g., `classDef implementation fill:#dfd,stroke:#383`).
-5.  **CRITICAL: Backtick Escaping Verification:**
-    *   All backticks used inside node labels **MUST** be triple-escaped for Mermaid rendering.
-    *   Example: `[Refactor \`SKILL.md\`]` MUST be written as `[Refactor \\\`SKILL.md\\\`]`.
-    *   **Action:** Explicitly scan the generated string. If a backtick is not preceded by `\\\`, use a replacement tool to correct it before writing to the file.
-6.  **Format and Present:**
-    *   **Frontmatter:** Use the standardized list-style tags and `date_created` from shared settings.
-    *   **Technical Dashboard:** Create an Obsidian callout (`> [!ABSTRACT] Session Technical Overview`) at the top containing primary repos, core features, tool usage, and key Git refs.
-    *   **Mermaid Block:** Place the flowchart inside a `\`\`\`mermaid` block.
-    *   **Textual Summary:** Provide a concise breakdown of objectives and decisions below the graph.
-7.  **Write to File:** Save to the `output/` directory using the timestamp format: `YYYY-MM-DD_HHMMSS-conversation-flow.md`.
+    *   **Deep-Linking (Interaction):**
+        - **Summary Links:** Link nodes to summary headers: `click NodeName "[[SummaryFile#Header]]"`.
+        - **Git Links:** Link nodes to GitHub commits: `click NodeName "https://github.com/..."`.
+5.  **CRITICAL: Triple-Escaping:**
+    *   All node labels containing backticks MUST use triple-escaping: `\\\`code\\\``.
+6.  **Format Dashboard:**
+    *   Create a prominent callout (`> [!ABSTRACT] Session Technical Overview`) including:
+        - **Chat Tag:** The `/chat save` tag.
+        - **Verified SHAs:** List repos, branches, and clickable SHAs.
+        - **Pairing:** Direct WikiLink to the Session Summary.
+7.  **Write to File:** Save to `output/YYYY-MM-DD_HHMMSS-conversation-flow.md`.
 
 ## Output Structure
 
-1.  **YAML Frontmatter**
-2.  **Metadata Dashboard** (Obsidian Callout)
-3.  **Mermaid Flowchart** (with semantic shapes and class styling)
-4.  **Textual Summary** (Goals, Decisions, Open Loops)
+1.  **YAML Frontmatter** (Standard list-style tags)
+2.  **Interactive Dashboard** (Abstract callout with Git/Vault links)
+3.  **Topological Map** (Mermaid graph with semantic shapes and click events)
+4.  **Textual Breakdown** (Concise summary of decisions and open loops)
 
 ### Class Styling Template
-Add these to the bottom of your Mermaid blocks:
 ```mermaid
 classDef research fill:#d1ecf1,stroke:#0c5460;
 classDef implementation fill:#d4edda,stroke:#155724;
