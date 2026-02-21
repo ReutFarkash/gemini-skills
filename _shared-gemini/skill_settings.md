@@ -8,9 +8,10 @@ This file contains shared settings for custom Gemini CLI skills.
     
 ## Frontmatter Template
 ---
-tags: ai_text, {{tags}}
-date: {{date}}
-source: gemini-cli (manual-link-needed), [[Gemini-CLI]]
+tags:
+  - ai_text
+  - {{tags}}
+date_created: {{date}}
 ---
 
 ## Identifying Information Template

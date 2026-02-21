@@ -32,7 +32,7 @@ When triggered, the agent will perform the following steps to construct a conver
     *   Add the identifying information (working directory, OS) using the template from the shared settings.
     *   Place the Mermaid.js flowchart syntax inside a `\`\`\`mermaid` code block for rendering, ensuring to escape the backticks.
     *   Append the textual summary below the flowchart.
-8.  **Write to File:** Save the output to a file in the current working directory, using the filename format from the shared settings (e.g., `YYYY-MM-DD_HHMMSS-conversation-flow.md`).
+8.  **Write to File:** Save the output to a file in the `output/` directory of the current working directory, using the filename format from the shared settings (e.g., `YYYY-MM-DD_HHMMSS-conversation-flow.md`).
 
 ## Output Structure
 
