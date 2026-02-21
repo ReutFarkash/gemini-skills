@@ -57,3 +57,10 @@ This section allows you to define skill-specific tags and links to be incorporat
 
 - [ ] **Automated GitOps Tethering:** Add logic to automatically detect if the current directory is a Git repository and append the current short SHA `[ref: <sha>]` to the summary header.
 - [ ] **Dataview Auto-Linking:** Automatically suggest or generate a Dataview query snippet at the bottom of the summary to show "Related notes from this project."
+- [ ] **Technical Overview Callout:** Generate a high-visibility Obsidian callout at the top of every note containing:
+    - **Links:** Local filesystem paths and GitHub remote URLs for all active repositories.
+    - **Features:** A bulleted list of specific feature names implemented during the session.
+- [ ] **Session Metadata:** Extract and display context-recognition data:
+    - **Length of Session:** Estimated time or number of turns.
+    - **Subject Cloud:** Main technical subjects and libraries referenced.
+    - **Toolbelt:** List of primary tools used (e.g., `replace`, `grep_search`, `run_shell_command`).
