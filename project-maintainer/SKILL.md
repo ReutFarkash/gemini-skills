@@ -22,15 +22,16 @@ Reviews all project documentation, updates where necessary, and generates a stat
     *   If they agree, perform `git add .` and `git commit -m "<user_provided_message>"` within that submodule.
 2.  **Identify Submodule States:** Once clean, get the current short Git SHA (`git rev-parse --short HEAD`) for both submodules.
 3.  **Find Files:** Locate all `STATUS.md`, `HISTORY.md` files within the `meta/skills/` directory and the `PROJECT_TODO.md` in the root.
-4.  **Update Status Files:** For each `STATUS.md` file, update the `Last Update` date and the `Last Verified SHA` (based on which submodule the skill belongs to).
-5.  **Update `PROJECT_STATUS.md`:** Create or update a `PROJECT_STATUS.md` file in the project root with a manifest report containing:
-    *   A "Project Status Summary" section.
-    *   The current status, most recent history entry, and current Git SHA for each skill.
-    *   A list of open tasks from `PROJECT_TODO.md`.
+4.  **Update Status Files:** For each `STATUS.md` file, update the `Last Update` date and the `Last Verified SHA`.
+5.  **Cheat Sheet Sync (Periodic):** 
+    *   Once in a while (e.g., if it's the first review of the month, or if the user explicitly asks to "Review the full workflow"), read the `GEMINI_WORKFLOW_CHEATSHEET.md` in the project root.
+    *   Verify that the submodule paths, GitHub URLs, and launch commands still match the actual project structure.
+    *   Suggest updates if any discrepancies are found.
+6.  **Update `PROJECT_STATUS.md`:** Create or update a `PROJECT_STATUS.md` file in the project root with a manifest report.
 
 **Example Usage:**
 
-"Review the project status."
+"Review the project status." or "Perform a full project and workflow review."
 
 ### `/log_change <skill_name> "<message>"`
 
@@ -39,7 +40,7 @@ Appends a new entry to the `HISTORY.md` file, tethered to the current Git SHA.
 **Workflow:**
 
 1.  **Git Status Guard:** Identify which submodule the skill belongs to. Check for uncommitted changes (`git status --porcelain`).
-    *   **Stop and ask the user** to commit if the submodule is dirty. This ensures the logged SHA reflects the actual state of the changes being logged.
+    *   **Stop and ask the user** to commit if the submodule is dirty.
 2.  **Identify Submodule SHA:** Once the submodule is clean, run `git rev-parse --short HEAD`.
     *   If skill is `quartz-blog-post`, use SHA from `skills/internal`.
     *   Otherwise, use SHA from `skills/public`.
