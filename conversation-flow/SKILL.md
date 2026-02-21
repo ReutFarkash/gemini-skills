@@ -1,37 +1,38 @@
 ---
 name: conversation-flow
-description: Generates a high-fidelity topological map. Mandates ultra-high resolution by synthesizing granular turn-by-turn memory with Flight Recorder data.
+description: Generates an ultra-high resolution topological map. Uses the meta/ENGINEERING_STANDARDS.md to ensure persistent syntax reliability and robust Obsidian linking.
 ---
 
-# Conversation Flow (v3.1)
+# Conversation Flow (v3.2)
 
 ## Overview
 
-This skill generates a high-fidelity topological map of a Gemini CLI session. It mandates **Ultra-High Resolution**: every significant pivot, feedback loop, and implementation step must be visualized. It synthesizes structured telemetry from the Flight Recorder with the deep narrative granularity of the session memory.
+This skill generates a topological map of a Gemini CLI session. It prioritizes **Resolution Persistence**: it must read `meta/ENGINEERING_STANDARDS.md` before generating any output to ensure the "Golden" Mermaid syntax is used, preventing regressions in linking or rendering.
 
-## Workflow: Generating a v3.1 Flow Analysis
+## Workflow: Generating a v3.2 Flow Analysis
 
-1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates and vault configuration.
-2.  **Gather Session Data (High-Resolution Synthesis):**
-    *   **NO COMPRESSION:** Do not summarize multiple technical turns into a single node. Every major turn deserves visual representation.
-    *   **Flight Recorder:** Use the `meta/SESSION_FLIGHT_RECORDER.md` to anchor nodes with correct SHAs and outcomes.
-    *   **Granular Memory:** Use internal memory to trace the *exact* sequence of events, including specific user feedback, minor bug fixes, and creative tangents.
-    *   *Note: In the future, the Flight Recorder will evolve to include more narrative detail, reducing reliance on internal memory.*
-3.  **Visual Taxonomy:**
-    *   **👤 Director Nodes:** Directives, pivots, and feedback.
-    *   **🤖 Executor Nodes:** Research, tool use, and code implementation.
-    *   **🐞 Detour Nodes:** Resolved bugs and technical obstacles.
-4.  **Generate Flowchart Syntax:**
-    *   **The Integrated Node:** Use semantic shapes and HTML-enhanced labels from v2.12.
-    *   **Reference Anchors:** Every node should attempt to include links to the Summary (§) and Git (🐙) where evidence exists.
-5.  **CRITICAL: Backtick Handling:** Use triple-escaping `\\\`code\\\`` for all labels.
+1.  **Read Shared Settings & Standards:**
+    *   Read `../_shared-gemini/skill_settings.md` for templates.
+    *   Read `meta/ENGINEERING_STANDARDS.md` for current technical solutions (linking, sanitization, escaping).
+2.  **Gather Session Data (Dual-Source & Ultra-High Res):**
+    *   **NO COMPRESSION:** Every technical turn and narrative pivot must be mapped.
+    *   **Flight Recorder:** Read `meta/SESSION_FLIGHT_RECORDER.md` for SHAs and outcomes.
+    *   **Memory:** Trace the exact narrative sequence, including specific user feedback and pivots.
+3.  **Visual Taxonomy & Attribution:**
+    *   `👤` User / `🤖` Agent icon attribution.
+    *   Semantic shapes (Hexagons, Rectangles, Diamonds).
+    *   Resolution classes (`resolved`, `detour`, `pivoted`).
+4.  **Generate Flowchart Syntax (Standard-Compliant):**
+    *   **Linking:** Use `<a class='internal-link' href='SummaryName'>§</a>` for Obsidian.
+    *   **Labelling:** Wrap all labels in double quotes. No leading numbers.
+5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
 6.  **Write to File:** Save directly to the `vault_output_directory`.
 
 ## Output Structure
 
 1.  **YAML Frontmatter**
 2.  **Interactive Dashboard**
-3.  **Topological Map** (Ultra-High Resolution Trace)
+3.  **Topological Map** (Ultra-High Resolution & Standard-Compliant)
 4.  **Textual Breakdown**
 
 ### Class Styling Template
