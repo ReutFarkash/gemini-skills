@@ -4,9 +4,9 @@ A collection of specialized expert skills for the [Gemini CLI](https://github.co
 
 ## Included Skills
 
-- **`obsidian-chat-summary`**: Generates structured Markdown summaries of chat sessions for Obsidian vaults.
+- **`obsidian-chat-summary`**: Generates structured Markdown summaries of chat sessions for Obsidian vaults. [Read the blog post](https://reutfarkash.github.io/Blog/posts/Obsidian-Chat-Summary/)
 - **`conversation-flow`**: Visualizes the narrative structure of a conversation using Mermaid.js flowcharts.
-- **`session-checkpoint`**: Provides a real-time snapshot of the current session's tasks, challenges, and context.
+- **`session-checkpoint`**: Provides a real-time snapshot of the current session's tasks, challenges, and context. [Read the blog post](https://reutfarkash.github.io/Blog/posts/Session-Checkpoint/)
 - **`project-maintainer`**: Automates the maintenance of `STATUS.md`, `HISTORY.md`, and `PROJECT_TODO.md` files, tethering them to Git SHAs.
 
 ## Shared Settings
@@ -31,6 +31,9 @@ To ensure skills can access the shared templates, launch your Gemini session wit
 ```bash
 gemini --include-directories /path/to/gemini-skills/_shared-gemini
 ```
+
+## More Resources
+Check out the [full blog](https://reutfarkash.github.io/Blog/) for more technical deep-dives into Obsidian and AI workflows.
 
 ## Contributing
 These skills are part of an evolving ecosystem. Feel free to open issues or submit pull requests to improve the logic or add new capabilities.
