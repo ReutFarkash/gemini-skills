@@ -1,44 +1,42 @@
 ---
 name: conversation-flow
-description: Generates an aesthetic topological map with integrated HTML buttons for robust Obsidian linking.
+description: Generates an aesthetic topological map with icon-based attribution (👤 User / 🤖 Agent) and integrated HTML reference buttons.
 ---
 
-# Conversation Flow (v2.11)
+# Conversation Flow (v2.12)
 
 ## Overview
 
-This skill generates a topological map of a Gemini CLI session. It uses an integrated aesthetic layout: technical and narrative reference buttons are embedded directly into the primary task nodes using HTML anchor tags, ensuring a compact visualization with multiple clickable entry points.
+This skill generates a high-fidelity topological map of a Gemini CLI session. It uses integrated aesthetic nodes with multiple clickable entry points and clear icon-based attribution to distinguish between human directives and agent execution.
 
-## Workflow: Generating a v2.11 Flow Analysis
+## Workflow: Generating a v2.12 Flow Analysis
 
 1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates.
-2.  **Metadata Inventory:** Track URLs for Git commits, Obsidian summary headers, and chat tags.
-3.  **Generate Flowchart Syntax:**
-    *   **The Integrated Node:** For every task, create a single node with an HTML-enhanced label.
+2.  **Narrative Attribution:**
+    *   **User (Director):** Prefix all nodes representing user directives, ideas, or feedback with the `👤` icon.
+    *   **Agent (Executor):** Prefix all nodes representing research, implementation, or technical actions with the `🤖` icon.
+3.  **Metadata Inventory:** Track URLs for Git commits, Obsidian summary headers, and chat tags.
+4.  **Generate Flowchart Syntax:**
+    *   **The Integrated Node:** Create single nodes with HTML-enhanced labels.
     ```mermaid
-    NodeID["Task Label <a class='internal-link' href='Summary'>§</a> <a href='URL'>🐙</a>"]
+    NodeID["👤 User Directive <a class='internal-link' href='Summary'>§</a>"]
+    NodeID["🤖 Agent Action <a href='URL'>🐙</a>"]
     ```
-    *   **Aesthetic Rules:**
-        - **Node Shapes:**
-            - Research: `NodeID{{Label}}` (Hexagon)
-            - Implementation: `NodeID[Label]` (Rectangle)
-            - Decision: `NodeID{Label}` (Diamond)
-            - Fail/Detour: `NodeID([Label])` (Cylinder)
-            - Checkpoint: `NodeID((Label))` (Circle)
-        - **Label Sanitization:** No leading numbers (e.g., `Phase 1 -`), no colons.
-    *   **Linking (Robust):**
-        - **Obsidian:** Use `<a class='internal-link' href='Note Name'>§</a>`. (Do NOT use `obsidian://` URIs inside labels).
-        - **Git:** Use `<a href='https://github.com/...'>🐙</a>`.
-    *   **Icons:** Use standard Unicode (🐙, §, 🏷️) for maximum compatibility.
-4.  **Connect the Nodes:** Draw arrows directly between the task nodes (e.g., `Node1 --> Node2`).
-5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session technical overview.
-6.  **Write to File:** Save directly to the `vault_output_directory`.
+    *   **Aesthetic Standards:**
+        - Hexagons `{{ }}` for Research, Rectangles `[ ]` for Implementation, Diamonds `{ }` for Decisions.
+        - **Label Sanitization:** Avoid leading numbers or colons.
+    *   **Linking:**
+        - Use `<a class='internal-link' href='Note Name'>§</a>` for Obsidian summaries.
+        - Use `<a href='URL'>🐙</a>` for Git commits.
+5.  **Connect the Nodes:** Draw direct arrows between the task nodes.
+6.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
+7.  **Write to File:** Save directly to the `vault_output_directory`.
 
 ## Output Structure
 
 1.  **YAML Frontmatter**
 2.  **Interactive Dashboard**
-3.  **Topological Map** (Integrated Aesthetic Nodes)
+3.  **Topological Map** (With 👤/🤖 Icon Attribution)
 4.  **Textual Breakdown**
 
 ### Class Styling Template
@@ -47,5 +45,6 @@ classDef research fill:#d1ecf1,stroke:#0c5460;
 classDef implementation fill:#d4edda,stroke:#155724;
 classDef decision fill:#fff3cd,stroke:#856404;
 classDef fail fill:#f8d7da,stroke:#721c24;
+classDef detour stroke-dasharray: 5 5, fill:#fff0f0, stroke:#721c24;
 classDef checkpoint fill:#e2d1f9,stroke:#5a2ca5;
 ```
