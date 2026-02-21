@@ -1,41 +1,29 @@
 ---
 name: conversation-flow
-description: Generates an interactive Mermaid.js flowchart using reference-centric iconography to link session narrative to Git SHAs, summaries, and external sources.
+description: Generates an interactive Mermaid.js flowchart using inline Markdown links within node labels to point to SHAs, summaries, and external sources.
 ---
 
-# Conversation Flow (v2.3)
+# Conversation Flow (v2.4)
 
 ## Overview
 
-This skill generates a topological map of a Gemini CLI session. It uses a standardized set of icons within node labels to act as shorthands for various types of technical and narrative proof, keeping the visualization clean while maximizing information density.
+This skill generates a topological map of a Gemini CLI session. It leverages Mermaid's Markdown string support to embed multiple, independent clickable links within a single node, allowing icons to act as direct portals to technical and narrative proof.
 
-## Workflow: Generating a v2.3 Flow Analysis
+## Workflow: Generating a v2.4 Flow Analysis
 
 1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates.
-2.  **Analyze Technical Context (Incremental Recall):**
-    *   **Metadata Inventory:** Track SHAs, summary headers, web sources, and chat tags associated with specific implementation steps.
-    *   **Identify Pairing:** Determine the Session Summary filename.
+2.  **Metadata Inventory:** Track URLs for Git commits, Obsidian summary headers, chat tags, and external sources associated with each node.
 3.  **Generate Flowchart Syntax:**
-    *   **Reference-Centric Icons:** Append icons to node labels to signify attached metadata:
-        - Git Commit: `🐙` (Links to GitHub/GitLab)
-        - Summary Header: `§` (Links to Obsidian Summary)
-        - Chat Checkpoint: `🏷️` (References `/chat save` tag)
-        - Web Source: `🌐` (Links to documentation)
-        - Local Source: `🏠` (Links to local file)
-        - Code Snippet: `✂️` (Links to specific summary section)
-    *   **Interaction Strategy:**
-        - If a node has a Git Commit (`🐙`), prioritize linking to the GitHub diff.
-        - If no commit exists but a Summary Header (`§`) does, link to the header.
-        - Use `click NodeName "URL_OR_WIKILINK"`.
-    *   **Semantic Shapes (Node Types):**
-        - Research: `NodeName{{Text}}`
-        - Implementation: `NodeName[Text]`
-        - Detour/Bug: `NodeName(["Text"])`
-        - Decision: `NodeName{"Text"}`
-        - Success/Checkpoint: `NodeName((Text))`
-4.  **CRITICAL: Formatting:**
-    *   Quote ALL labels: `["Label with Icons § 🐙"]`.
-    *   Triple-escape backticks: `\\\`code\\\``.
+    *   **Markdown Strings:** Use the backtick-quoted string syntax for nodes to enable Markdown links: `NodeID["`**Text** [🐙](URL) [§](URL)`"]`.
+    *   **Icon Mapping:**
+        - `🐙`: GitHub/GitLab Commit URL.
+        - `§`: Obsidian Summary header WikiLink.
+        - `🏷️`: Chat save tag reference.
+        - `🌐`: Documentation URL.
+    *   **Interaction:** Do NOT use the global `click` command. Instead, embed standard Markdown `[icon](link)` syntax directly into the label string.
+4.  **CRITICAL: Formatting & Escaping:**
+    *   The outer quotes must be double-quotes, and the inner string must start and end with a backtick: `"``Text [🐙](link)``"`.
+    *   Ensure all Markdown syntax within the label is valid.
 5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
 6.  **Write to File:** Save to `output/YYYY-MM-DD_HHMMSS-conversation-flow.md`.
 
@@ -43,7 +31,7 @@ This skill generates a topological map of a Gemini CLI session. It uses a standa
 
 1.  **YAML Frontmatter**
 2.  **Interactive Dashboard**
-3.  **Topological Map** (With Reference-Centric Icons)
+3.  **Topological Map** (With Hyper-Linked Icons)
 4.  **Textual Breakdown**
 
 ### Class Styling Template
