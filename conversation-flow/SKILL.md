@@ -1,34 +1,30 @@
 ---
 name: conversation-flow
-description: Generates an aesthetic topological map with icon-based attribution (👤 User / 🤖 Agent) and integrated HTML reference buttons.
+description: Generates a high-fidelity topological map using both the Session Flight Recorder and internal session memory for maximum accuracy and narrative depth.
 ---
 
-# Conversation Flow (v2.12)
+# Conversation Flow (v3.0)
 
 ## Overview
 
-This skill generates a high-fidelity topological map of a Gemini CLI session. It uses integrated aesthetic nodes with multiple clickable entry points and clear icon-based attribution to distinguish between human directives and agent execution.
+This skill generates a high-fidelity topological map of a Gemini CLI session. It synthesizes data from the `meta/SESSION_FLIGHT_RECORDER.md` (if available) and the agent's internal session memory to create a verifiable, detailed engineering journey.
 
-## Workflow: Generating a v2.12 Flow Analysis
+## Workflow: Generating a v3.0 Flow Analysis
 
-1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates.
-2.  **Narrative Attribution:**
-    *   **User (Director):** Prefix all nodes representing user directives, ideas, or feedback with the `👤` icon.
-    *   **Agent (Executor):** Prefix all nodes representing research, implementation, or technical actions with the `🤖` icon.
-3.  **Metadata Inventory:** Track URLs for Git commits, Obsidian summary headers, and chat tags.
+1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for templates and vault configuration.
+2.  **Gather Session Data (Dual-Source):**
+    *   **Flight Recorder:** Read `meta/SESSION_FLIGHT_RECORDER.md` to extract the structured "Turn Ledger," including Git SHAs, tool outcomes, and specific detours.
+    *   **Internal Memory:** Review the full conversation history to capture narrative nuance, creative ideas, and specific directives that might not be in the ledger yet.
+    *   **Synthesis:** Combine both sources to identify the primary engineering path and all technical "side-tracks."
+    *   *Note: In the future, if the Flight Recorder proves sufficient, we may remove the dependency on internal memory to conserve computation.*
+3.  **Narrative Attribution:**
+    *   **User (Director):** Prefix nodes representing user directives, ideas, or feedback with `👤`.
+    *   **Agent (Executor):** Prefix nodes representing research, implementation, or technical actions with `🤖`.
 4.  **Generate Flowchart Syntax:**
-    *   **The Integrated Node:** Create single nodes with HTML-enhanced labels.
-    ```mermaid
-    NodeID["👤 User Directive <a class='internal-link' href='Summary'>§</a>"]
-    NodeID["🤖 Agent Action <a href='URL'>🐙</a>"]
-    ```
-    *   **Aesthetic Standards:**
-        - Hexagons `{{ }}` for Research, Rectangles `[ ]` for Implementation, Diamonds `{ }` for Decisions.
-        - **Label Sanitization:** Avoid leading numbers or colons.
-    *   **Linking:**
-        - Use `<a class='internal-link' href='Note Name'>§</a>` for Obsidian summaries.
-        - Use `<a href='URL'>🐙</a>` for Git commits.
-5.  **Connect the Nodes:** Draw direct arrows between the task nodes.
+    *   **The Integrated Node:** Use semantic shapes and HTML-enhanced labels from v2.12.
+    *   **Reference Links:** Use `<a class='internal-link'>` for summaries and `<a href>` for Git/Web links.
+    *   **Sanitization:** Enforce strict label cleaning (no leading numbers/colons).
+5.  **Connect the Nodes:** Map the direct path and visual detours (dashed borders) based on the "Outcome" column of the Flight Recorder.
 6.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
 7.  **Write to File:** Save directly to the `vault_output_directory`.
 
@@ -36,7 +32,7 @@ This skill generates a high-fidelity topological map of a Gemini CLI session. It
 
 1.  **YAML Frontmatter**
 2.  **Interactive Dashboard**
-3.  **Topological Map** (With 👤/🤖 Icon Attribution)
+3.  **Topological Map** (Synthesized from dual-source data)
 4.  **Textual Breakdown**
 
 ### Class Styling Template
