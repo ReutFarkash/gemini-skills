@@ -17,7 +17,7 @@ Reviews all project documentation, updates where necessary, and generates a stat
 
 **Workflow:**
 
-1.  **Find Files:** Locate all `STATUS.md`, `HISTORY.md` files within the `skills/` directory and the `PROJECT_TODO.md` in the root.
+1.  **Find Files:** Locate all `STATUS.md`, `HISTORY.md` files within the `meta/skills/` directory and the `PROJECT_TODO.md` in the root.
 2.  **Update Status Files:** For each `STATUS.md` file, read its content, find the `Last Update: <date>` line, and replace the date with the current date.
 3.  **Read All Files:** Read the content of all documentation files.
 4.  **Update `PROJECT_STATUS.md`:** Create or update a `PROJECT_STATUS.md` file in the project root with a comprehensive Markdown report containing:
@@ -35,7 +35,7 @@ Appends a new entry to the `HISTORY.md` file for a specified skill.
 
 **Workflow:**
 
-1.  **Identify Target File:** Locate the `HISTORY.md` file at `skills/<skill_name>/HISTORY.md`.
+1.  **Identify Target File:** Locate the `HISTORY.md` file at `meta/skills/<skill_name>/HISTORY.md`.
 2.  **Get Current Date:** Get the current date in `YYYY-MM-DD` format.
 3.  **Read File:** Read the content of the `HISTORY.md` file.
 4.  **Construct New Entry:** Create a new markdown-formatted entry, for example: `### YYYY-MM-DD
@@ -53,7 +53,7 @@ Updates the `Status` field in a skill's `STATUS.md` file.
 
 **Workflow:**
 
-1.  **Identify Target File:** Locate the `STATUS.md` file at `skills/<skill_name>/STATUS.md`.
+1.  **Identify Target File:** Locate the `STATUS.md` file at `meta/skills/<skill_name>/STATUS.md`.
 2.  **Read File:** Read the content of the `STATUS.md` file.
 3.  **Find and Replace:** Use a text replacement tool to find the line matching `Status: <old_status>` and replace it with `Status: <new_status>`.
 
