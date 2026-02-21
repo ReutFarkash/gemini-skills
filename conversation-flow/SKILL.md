@@ -1,58 +1,57 @@
 ---
 name: conversation-flow
-description: Generates a Mermaid.js flowchart and a textual summary of the current conversation's narrative structure, including main goals, tangents, and open loops.
+description: Generates a Mermaid.js flowchart and a textual summary of the current conversation's narrative structure, including metadata callouts and Git SHAs.
 ---
 
 # Conversation Flow
 
 ## Overview
 
-This skill enables the Gemini CLI agent to analyze the current conversation's history and generate a visual flowchart of its narrative structure using Mermaid.js syntax. It provides a clear overview of the main goals, tangents, sub-problems, and unresolved "open loops" in the discussion.
+This skill enables the Gemini CLI agent to analyze the current conversation's history and generate a high-fidelity visual flowchart of its narrative structure. It provides a topological map of the session, linking intent, technical implementation (Git SHAs), and session metadata into an interactive index for an Obsidian vault.
 
 ## Workflow: Generating a Conversation Flow
 
-When triggered, the agent will perform the following steps to construct a conversation flow analysis:
+To construct a conversation flow analysis, perform the following steps:
 
-1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file to get the file naming convention, frontmatter template, and identifying information template.
-2.  **Analyze Conversation History:** Review the entire conversation to identify the main goals, significant tangents, problems encountered, and their resolutions.
-3.  **Identify Open Loops:** Specifically look for questions that were not fully answered or tasks that were started but not completed.
+1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file for naming, frontmatter, and metadata templates.
+2.  **Analyze Technical Context:**
+    *   **Git State:** Run `git rev-parse --short HEAD` in active repositories (e.g., `coffeeproject`, `skills/public`).
+    *   **Tool Usage:** Review history to count usage of primary tools (e.g., `replace`, `grep_search`, `write_file`).
+    *   **Feature Log:** Identify specific feature names or infrastructure changes implemented.
+3.  **Analyze Narrative Structure:** Identify the main goals, technical research phases, implementation steps, critical decisions, and unresolved "open loops."
 4.  **Generate Flowchart Syntax:**
-    *   Structure the conversation's narrative as a graph.
-    *   Generate the code for this graph using **Mermaid.js** flowchart syntax (`graph TD` or `graph LR`).
-    *   Nodes in the graph should represent states like "Start", "Goal", "Sub-Problem", "Tangent", "Decision", and "Resolution".
-    *   **Important:** Any backticks (\`) used inside node labels must be escaped. For example, instead of writing `[Node with \`code\`]`, you MUST write `[Node with \\\`code\\\`]`.
-5.  **Verify and Correct Escaping:** Review the generated Mermaid.js syntax. If any backticks inside node labels are not escaped, use a replacement tool to replace them with an escaped backslash (e.g., replace `\`code\`` with `\\\`code\\\``).
-6.  **Generate Textual Summary:**
-    *   Write a brief summary of the conversation's main objectives.
-    *   Create a clear list of any identified "Open Loops".
-    *   Highlight any key decisions that changed the course of the conversation.
-7.  **Format and Present:**
-    *   Create a Markdown file.
-    *   Construct the frontmatter using the template from the shared settings.
-    *   Add the identifying information (working directory, OS) using the template from the shared settings.
-    *   Place the Mermaid.js flowchart syntax inside a `\`\`\`mermaid` code block for rendering, ensuring to escape the backticks.
-    *   Append the textual summary below the flowchart.
-8.  **Write to File:** Save the output to a file in the `output/` directory of the current working directory, using the filename format from the shared settings (e.g., `YYYY-MM-DD_HHMMSS-conversation-flow.md`).
+    *   **Schema & Shapes:** Use the following semantic schema for nodes:
+        - **Research:** `NodeName{{Text}}` (Hexagon)
+        - **Implementation:** `NodeName[Text]` (Rectangle)
+        - **Decision:** `NodeName{Text}` (Diamond)
+        - **Bug/Obstacle:** `NodeName([Text])` (Cylinder)
+        - **Success/Checkpoint:** `NodeName((Text))` (Circle)
+        - **Open Loop:** `NodeName[Text] -.-` (Dashed connection)
+    *   **Class Definitions:** Include `classDef` statements at the bottom of the Mermaid block for colors (e.g., `classDef implementation fill:#dfd,stroke:#383`).
+5.  **CRITICAL: Backtick Escaping Verification:**
+    *   All backticks used inside node labels **MUST** be triple-escaped for Mermaid rendering.
+    *   Example: `[Refactor \`SKILL.md\`]` MUST be written as `[Refactor \\\`SKILL.md\\\`]`.
+    *   **Action:** Explicitly scan the generated string. If a backtick is not preceded by `\\\`, use a replacement tool to correct it before writing to the file.
+6.  **Format and Present:**
+    *   **Frontmatter:** Use the standardized list-style tags and `date_created` from shared settings.
+    *   **Technical Dashboard:** Create an Obsidian callout (`> [!ABSTRACT] Session Technical Overview`) at the top containing primary repos, core features, tool usage, and key Git refs.
+    *   **Mermaid Block:** Place the flowchart inside a `\`\`\`mermaid` block.
+    *   **Textual Summary:** Provide a concise breakdown of objectives and decisions below the graph.
+7.  **Write to File:** Save to the `output/` directory using the timestamp format: `YYYY-MM-DD_HHMMSS-conversation-flow.md`.
 
 ## Output Structure
 
-The generated Markdown file will have the following structure:
+1.  **YAML Frontmatter**
+2.  **Metadata Dashboard** (Obsidian Callout)
+3.  **Mermaid Flowchart** (with semantic shapes and class styling)
+4.  **Textual Summary** (Goals, Decisions, Open Loops)
 
-1.  **YAML Frontmatter:** For tags, date, and source, based on the shared settings.
-2.  **Identifying Information:** The working directory and operating system.
-3.  **Mermaid Flowchart:** The visual representation of the conversation.
-4.  **Textual Summary:** A summary of the conversation's main objectives, open loops, and key decisions.
-
-### Example Mermaid.js Output
-
-```
-\`\`\`mermaid
-graph TD
-    A[Start: Main Goal] --> B{Sub-Problem};
-    B --> C[Tangent: Side Discussion];
-    C --> B;
-    B --> D[Resolution];
-    D --> E[Next Goal];
-    C --> F(Open Loop: Unresolved Question);
-\`\`\`
+### Class Styling Template
+Add these to the bottom of your Mermaid blocks:
+```mermaid
+classDef research fill:#d1ecf1,stroke:#0c5460;
+classDef implementation fill:#d4edda,stroke:#155724;
+classDef decision fill:#fff3cd,stroke:#856404;
+classDef fail fill:#f8d7da,stroke:#721c24;
+classDef checkpoint fill:#e2d1f9,stroke:#5a2ca5;
 ```
