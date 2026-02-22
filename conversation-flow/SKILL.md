@@ -1,6 +1,7 @@
 ---
 name: conversation-flow
 description: Generates a Mermaid.js flowchart and a textual summary of the current conversation's narrative structure, including main goals, tangents, and open loops.
+version: v1.0.0
 ---
 
 # Conversation Flow
@@ -33,6 +34,26 @@ When triggered, the agent will perform the following steps to construct a conver
     *   Place the Mermaid.js flowchart syntax inside a `\`\`\`mermaid` code block for rendering, ensuring to escape the backticks.
     *   Append the textual summary below the flowchart.
 8.  **Write to File:** Save the output to a file in the `output/` directory of the current working directory, using the filename format from the shared settings (e.g., `YYYY-MM-DD_HHMMSS-conversation-flow.md`).
+
+### `/visualize_active_skills`
+
+Analyzes active skills and adds a sub-graph to the Mermaid flow showing their versions.
+
+**Workflow:**
+
+1.  **Identify Active Skills:** Get the list of currently active skills.
+2.  **Read SKILL.md Frontmatter:** For each active skill, locate its `SKILL.md` file and parse the YAML frontmatter to read the `version` field.
+3.  **Generate Sub-graph:** Create a Mermaid `subgraph ActiveSkills` block, with each node representing `skill-name version`.
+4.  **Embed in Flow:** Add the sub-graph to the main `conversation-flow` output.
+
+**Example Mermaid Output:**
+
+```mermaid
+subgraph ActiveSkills
+    S1[git-flow-automator v1.0.1]
+    S2[conversation-flow v1.0.0]
+end
+```
 
 ## Output Structure
 

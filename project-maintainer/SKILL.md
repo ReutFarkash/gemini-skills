@@ -1,6 +1,7 @@
 ---
 name: project-maintainer
 description: A skill to automate the maintenance of project documentation files like STATUS.md, HISTORY.md, and PROJECT_TODO.md.
+version: v1.0.0
 ---
 
 # Project Maintainer
@@ -65,6 +66,23 @@ Updates the `Status` and `Last Verified SHA` in a skill's `STATUS.md` file.
 **Example Usage:**
 
 `/update_status conversation-flow --status "Active"`
+
+### `/increment_version <skill_name> --type [patch|minor|major]`
+
+Increments the skill version in its own `SKILL.md` frontmatter.
+
+**Workflow:**
+
+1.  **Locate Skill:** Find the `SKILL.md` for the specified `<skill_name>`.
+2.  **Read Frontmatter:** Parse the YAML to get the current `version`.
+3.  **Calculate New Version:** Increment the version string (e.g., `v1.0.0` -> `v1.0.1` for patch).
+4.  **Update SKILL.md:** Replace the `version:` line with the new version.
+5.  **Log History:** Append the version change to the skill's `HISTORY.md` file in the `meta/` directory.
+6.  **Trigger Git Tag:** If `git-flow-automator` is active, request it to tag the repository containing the skill with the new version.
+
+**Example Usage:**
+
+`/increment_version git-flow-automator --type patch`
 
 ### `/add_todo "<task>"`
 

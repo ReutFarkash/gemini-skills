@@ -1,6 +1,7 @@
 ---
 name: obsidian-chat-summary
 description: Generates a concise, technical Markdown summary of a Gemini CLI chat session, formatted for an Obsidian vault. Includes code, highlights, decisions, and custom tags/links. Use at the end of a session or task to create a structured record.
+version: v1.0.0
 ---
 
 # Obsidian Chat Summary

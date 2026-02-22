@@ -1,6 +1,7 @@
 ---
 name: session-checkpoint
 description: Provides a concise overview of the current Gemini CLI session, including active tasks, recent challenges, tool permissions, and overall context. Use to get a quick "checkpoint" of the conversation.
+version: v1.0.0
 ---
 
 # Session Checkpoint
