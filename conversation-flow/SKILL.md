@@ -1,69 +1,50 @@
 ---
 name: conversation-flow
-description: Generates a high-resolution Mermaid.js flowchart of the conversation's narrative structure. Uses `meta/ENGINEERING_STANDARDS.md` to ensure syntax reliability.
-version: v1.0.1
+description: Generates a high-resolution, HTML-linked topological map of the conversation. Uses `meta/ENGINEERING_STANDARDS.md` to ensure syntax reliability (v3.3).
+version: v1.0.2
 ---
 
-# Conversation Flow (v3.2)
+# Conversation Flow (v3.3 - Golden v2.5 Standards)
 
 ## Overview
+This skill generates a high-fidelity narrative map. It prioritizes **Resolution Persistence** and **Visual Clarity**, using HTML anchor tags for robust linking and distinct node shapes for different conversation states.
 
-This skill generates a topological map of a Gemini CLI session. It prioritizes **Resolution Persistence**: it must read `meta/ENGINEERING_STANDARDS.md` before generating any output to ensure the "Golden" Mermaid syntax is used, preventing regressions in linking or rendering.
-
-## Workflow: Generating a v3.2 Flow Analysis
+## Workflow: Generating a v3.3 Flow Analysis
 
 1.  **Read Shared Settings & Standards:**
     *   Read `../_shared-gemini/skill_settings.md` for templates.
-    *   Read `meta/ENGINEERING_STANDARDS.md` for current technical solutions (linking, sanitization, escaping).
-2.  **Gather Session Data (Dual-Source & Ultra-High Res):**
-    *   **NO COMPRESSION:** Every technical turn and narrative pivot must be mapped.
+    *   Read `meta/ENGINEERING_STANDARDS.md` for current technical solutions.
+2.  **Gather Session Data:**
+    *   **NO COMPRESSION:** Map every technical turn and narrative pivot.
     *   **Flight Recorder:** Read `meta/SESSION_FLIGHT_RECORDER.md` for SHAs and outcomes.
-    *   **Memory:** Trace the exact narrative sequence, including specific user feedback and pivots.
-3.  **Visual Taxonomy & Attribution:**
-    *   `👤` User / `🤖` Agent icon attribution.
-    *   Semantic shapes (Hexagons, Rectangles, Diamonds).
-    *   Resolution classes (`resolved`, `detour`, `pivoted`).
-4.  **Generate Flowchart Syntax (Standard-Compliant):**
-    *   **HEX CODE MANDATE:** All `stroke` and `fill` properties in `classDef` and `linkStyle` definitions **MUST** use valid, 6-digit hexadecimal color codes (e.g., `#FF0000`). No color names, comments, or other characters are permitted.
-    *   **Linking:** Use `<a class='internal-link' href='SummaryName'>§</a>` for Obsidian.
-    *   **Labelling:** Wrap all labels in double quotes. No leading numbers.
-5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
-6.  **Write to File:** Save directly to the `vault_output_directory`.
+3.  **Project Partitioning (MANDATORY):**
+    *   **Identify Projects:** Group turns by the project they belong to (e.g., `Assistant Infra`, `Skills Dev`, `Sublet Search`).
+    *   **Use Subgraphs:** Wrap related nodes in `subgraph ProjectName`.
+    *   **Cross-Links:** Use arrows to connect nodes across different subgraphs when an action in one project impacts or triggers an action in another.
+4.  **Visual Taxonomy (v2.5 Standard):**
+    *   **Checkpoints:** `NodeID(("Label <a href='...'>🏷️</a>")):::checkpoint` (Double Circle)
+    *   **Decisions:** `NodeID{"Label <a href='...'>🐙</a>"}` (Rhombus)
+    *   **Research:** `NodeID{{"Label <a href='...'>§</a>"}}` (Hexagon)
+    *   **Implementation:** `NodeID["Label <a href='...'>🐙</a>"]` (Rectangle)
+    *   **Detours/Bugs:** `NodeID(["Label <a href='...'>🐞</a>"]):::detour` (Stadium)
+4.  **Generate Flowchart Syntax:**
+    *   **HTML Links:** Use `<a href='...'>§</a>` or `<a href='...'>🐙</a>` inside node labels.
+    *   **NO ARROWS TO SKILLS:** Do not link skill nodes to the narrative flow. List active skills in the `[!ABSTRACT]` callout or a floating subgraph.
+    *   **HEX CODE MANDATE:** Use only 6-digit hex codes in `classDef`.
+5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview, including the list of active skills and their versions.
 
-### `/visualize_active_skills`
-
-Analyzes active skills and adds a sub-graph to the Mermaid flow showing their versions.
-
-**Workflow:**
-
-1.  **Identify Active Skills:** Get the list of currently active skills.
-2.  **Read SKILL.md Frontmatter:** For each active skill, locate its `SKILL.md` file and parse the YAML frontmatter to read the `version` field.
-3.  **Generate Sub-graph:** Create a Mermaid `subgraph ActiveSkills` block, with each node representing `skill-name version`.
-4.  **Embed in Flow:** Add the sub-graph to the main `conversation-flow` output.
-
-**Example Mermaid Output:**
-
+## Validated Styling Block (MANDATORY)
 ```mermaid
-subgraph ActiveSkills
-    S1[git-flow-automator v1.0.1]
-    S2[conversation-flow v1.0.0]
-end
+    classDef research fill:#d1ecf1,stroke:#0c5460;
+    classDef implementation fill:#d4edda,stroke:#155724;
+    classDef decision fill:#fff3cd,stroke:#856404;
+    classDef fail fill:#f8d7da,stroke:#721c24;
+    classDef detour stroke-dasharray: 5 5, fill:#fff0f0, stroke:#721c24;
+    classDef checkpoint fill:#e2d1f9,stroke:#5a2ca5;
 ```
 
 ## Output Structure
-
-1.  **YAML Frontmatter**
-2.  **Interactive Dashboard**
-3.  **Topological Map** (Ultra-High Resolution & Standard-Compliant)
-4.  **Textual Breakdown**
-
-### Class Styling Template
-```mermaid
-classDef research fill:#d1ecf1,stroke:#0c5460;
-classDef implementation fill:#d4edda,stroke:#155724;
-classDef decision fill:#fff3cd,stroke:#856404;
-classDef fail fill:#f8d7da,stroke:#721c24;
-classDef detour stroke-dasharray: 5 5, fill:#fff0f0, stroke:#721c24;
-classDef checkpoint fill:#e2d1f9,stroke:#5a2ca5;
-classDef pivoted stroke:#fa0,stroke-width:4px;
-```
+1. YAML Frontmatter
+2. [!ABSTRACT] Callout (Metadata, Active Skills, versions)
+3. Mermaid Topological Map
+4. Textual Breakdown (Summary, Open Loops, Decisions)
