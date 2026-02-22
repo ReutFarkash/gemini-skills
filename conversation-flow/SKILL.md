@@ -24,6 +24,7 @@ This skill generates a topological map of a Gemini CLI session. It prioritizes *
     *   Semantic shapes (Hexagons, Rectangles, Diamonds).
     *   Resolution classes (`resolved`, `detour`, `pivoted`).
 4.  **Generate Flowchart Syntax (Standard-Compliant):**
+    *   **HEX CODE MANDATE:** All `stroke` and `fill` properties in `classDef` and `linkStyle` definitions **MUST** use valid, 6-digit hexadecimal color codes (e.g., `#FF0000`). No color names, comments, or other characters are permitted.
     *   **Linking:** Use `<a class='internal-link' href='SummaryName'>§</a>` for Obsidian.
     *   **Labelling:** Wrap all labels in double quotes. No leading numbers.
 5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview.
