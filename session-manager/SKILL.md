@@ -20,7 +20,10 @@ Performs the "Executive Boot Sequence."
 1.  **Activate Background Listeners:**
     *   Activate `git-flow-automator`.
     *   Activate `project-maintainer`.
-2.  **Verify Directory Access (Guard):**
+    *   Activate `session-tracker`.
+2.  **Initialize Session Tracking:**
+    *   Call `/session/start` to generate a `session_id` and create a manifest in `coffeeproject/meta/session_history/`.
+3.  **Verify Directory Access (Guard):**
     *   **Logic:** The agent reads the required directory list from the project's `GEMINI.md` or a provided configuration.
     *   **User Check:** For this specific vault, verify access to:
         - `Infrastructure`
