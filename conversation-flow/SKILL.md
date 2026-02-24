@@ -32,6 +32,7 @@ This skill generates a high-fidelity narrative map. It prioritizes **Resolution 
     *   **NO ARROWS TO SKILLS:** Do not link skill nodes to the narrative flow. List active skills in the `[!ABSTRACT]` callout or a floating subgraph.
     *   **HEX CODE MANDATE:** Use only 6-digit hex codes in `classDef`.
 5.  **Format Dashboard:** Create the `[!ABSTRACT]` callout with the session технический overview, including the list of active skills and their versions.
+6.  **Session Wrap-up Tagging:** Generate the chat save tag according to `meta/ENGINEERING_STANDARDS.md` v1.8. Provide it as the very last line of the response, alone and unstyled.
 
 ## Validated Styling Block (MANDATORY)
 ```mermaid

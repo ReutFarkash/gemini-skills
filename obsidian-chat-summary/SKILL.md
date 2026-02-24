@@ -15,8 +15,8 @@ This skill enables the Gemini CLI to generate a concise, technical Markdown summ
 To generate a summary, the agent will:
 
 1.  **Read Shared Settings:** Read the `../_shared-gemini/skill_settings.md` file to get the file naming convention, frontmatter template, and summary configuration (e.g., `include_work_duration`).
-2.  **Generate Chat Save Tag:** Generate a unique timestamp-based tag for chat state preservation (e.g., `summary-YYYYMMDD-HHMMSS`).
-3.  **Instruct User to Save Chat:** Present the user with the generated tag and the command they need to execute (`/chat save <tag>`). The agent will then wait for the user to respond with "Done" or "Confirmed" once the command has been executed.
+2.  **Generate Session Wrap-up Tag:** Generate the chat save tag according to `meta/ENGINEERING_STANDARDS.md` v1.8 (Format: `YYYY-MM-DD_HHMMSS-description`).
+3.  **Instruct User to Save Chat:** Present the user with the generated tag. The tag MUST be provided as the **very last line** of the response, alone and unstyled.
 4.  **Collect Session Information:** Review the recent conversation history to identify key points based on the user's specified content types.
 5.  **Read Configuration:** Identify skill-specific custom tags and Obsidian links embedded within this SKILL.md.
 6.  **Construct Frontmatter:** Create YAML frontmatter using the template from the shared settings, populating the `{{tags}}` and `{{date}}` variables.
