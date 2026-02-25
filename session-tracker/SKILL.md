@@ -23,7 +23,8 @@ This skill operates on a dedicated, version-controlled directory located at `/Us
     2.  If a `[name]` is not provided, it analyzes the user's initial prompt to generate a human-readable name (e.g., "Data Vault Refactor").
     3.  Creates a new manifest file: `manifests/{session_id}.md`.
     4.  Populates the manifest with initial metadata: `session_id`, `name`, `start_time`, `project_context`, `cli_version`, `initial_model`.
-    5.  Appends a new entry to the `_SESSION_INDEX.md` table.
+    5.  **Optional Integration:** If a narrative source (e.g., an Obsidian Daily Note) is identified, include a `narrative:` field in the frontmatter. This is not required for standalone operation.
+    6.  Appends a new entry to the `_SESSION_INDEX.md` table.
 
 ### `/session/end` (AUTOMATIC)
 - **Trigger:** This should be triggered automatically by the `session-manager` when the user quits a session.
