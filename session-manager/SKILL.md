@@ -21,8 +21,11 @@ Performs the "Executive Boot Sequence."
     *   Activate `git-flow-automator`.
     *   Activate `project-maintainer`.
     *   Activate `session-tracker`.
-2.  **Initialize Session Tracking:**
-    *   Call `/session/start` to generate a `session_id` and create a manifest in `coffeeproject/meta/session_history/`.
+    *   Activate `session-chronicler`.
+2.  **Initialize Tracking & Narrative:**
+    *   Call `/session/start` to generate a `session_id`.
+    *   Initialize the `Activity Log` in the Daily Note using `session-chronicler`.
+    *   **Cross-Link:** Ensure the `session_id` is included in the first Chronicler log entry, and the Daily Note link is added to the session manifest.
 3.  **Verify Directory Access (Guard):**
     *   **Logic:** The agent reads the required directory list from the project's `GEMINI.md` or a provided configuration.
     *   **User Check:** For this specific vault, verify access to:
